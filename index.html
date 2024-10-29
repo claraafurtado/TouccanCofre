@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Cofre</title>
+</head>
+<body>
+    <div class="content">
+        <h1 class="titulo">Cofre</h1>
+        <div class="linha-laranja"></div>
+
+        <div class="container">
+            <div class="caixas-container" id="caixas-container">
+              
+                <div class="caixa">
+                    <h2 class="titulo-caixa">Maria Clara - Assistente Administrativo</h2>
+                    <p class="valor">R$ 100,00</p>
+                    <p class="data">01/01/2023</p>
+                </div>
+                <div class="caixa">
+                    <h2 class="titulo-caixa">Gustavo Campos - Atendente</h2>
+                    <p class="valor">R$ 200,00</p>
+                    <p class="data">02/01/2023</p>
+                </div>
+                <div class="caixa">
+                    <h2 class="titulo-caixa">Gabrielle Bueno - Auxiliar</h2>
+                    <p class="valor">R$ 150,00</p>
+                    <p class="data">03/01/2023</p>
+                </div>
+                <div class="caixa">
+                    <h2 class="titulo-caixa">Maria Clara - Assistente Administrativo</h2>
+                    <p class="valor">R$ 100,00</p>
+                    <p class="data">01/01/2023</p>
+                </div>
+                <div class="caixa">
+                    <h2 class="titulo-caixa">Gustavo Campos - Atendente</h2>
+                    <p class="valor">R$ 200,00</p>
+                    <p class="data">02/01/2023</p>
+                </div>
+
+                <div class="caixa">
+                    <h2 class="titulo-caixa">João Silva - Desenvolvedor</h2>
+                    <p class="valor">R$ 300,00</p>
+                    <p class="data">04/01/2023</p>
+                </div>
+                <div class="caixa">
+                    <h2 class="titulo-caixa">Ana Pereira - Designer</h2>
+                    <p class="valor">R$ 250,00</p>
+                    <p class="data">05/01/2023</p>
+                </div>
+                <div class="caixa">
+                    <h2 class="titulo-caixa">Lucas Souza - Engenheiro</h2>
+                    <p class="valor">R$ 350,00</p>
+                    <p class="data">06/01/2023</p>
+                </div>
+                <div class="caixa">
+                    <h2 class="titulo-caixa">Paula Lima - Analista</h2>
+                    <p class="valor">R$ 280,00</p>
+                    <p class="data">07/01/2023</p>
+                </div>
+            </div>
+
+            <div class="cartao-info">
+                <div class="linha-decorativa"></div>
+                <div class="titulo-cartao">Meu cartão</div>
+                <div class="subtitulo">Você pode ter no máximo  <br> &nbsp; UM  cartãos cadastrado</div>
+                <div class="caixa-cartao">
+                    <img src="./cartao.png" class="icon-cartao" alt="Ícone do Cartão">
+                    <div class="detalhes-cartao">
+                        <div class="titulo-detalhe"> Apelido • Débito </div>
+                        <div class="subtitulo-detalhe">••••7865</div>
+                    </div>
+                </div>
+                <button class="botao-editar" id="botao-editar">Editar cartão</button>
+            </div>
+        </div>
+
+        <div class="botoes-navegacao">
+            <button class="botao-seta" id="btn-up" disabled>⬆</button>
+            <button class="botao-seta" id="btn-down">⬇</button>
+        </div>
+
+        <!-- Card de Edição -->
+<div class="overlay" id="overlay">
+    <div class="card-editar" id="card-editar">
+        <h2>Editar Cartão</h2>
+        <div class="campos">
+            <input type="text" id="numero-cartao" maxlength="20" placeholder="Número do cartão" required>
+            <input type="text" id="validade" maxlength="5" placeholder="Validade (MM/AA)" required>
+            <input type="text" id="cvv" maxlength="3" placeholder="CVV" required>
+        </div>
+        <input type="text" id="nome-titular" maxlength="50" placeholder="Nome do titular" required>
+        <input type="text" id="cnpj-cpf" maxlength="14" placeholder="CNPJ/CPF" required>
+        <input type="text" id="apelido" maxlength="25" placeholder="Apelido do cartão (opcional)">
+        <button class="botao-salvar" id="botao-salvar">Salvar</button>
+    </div>
+</div>
+
+
+<div id="notificacao" class="notificacao">Salvo com sucesso</div>
+
+
+
+
+    
+
+    <script>
+        const container = document.getElementById('caixas-container');
+        const caixas = container.children;
+        let startIndex = 0;
+        const maxNotifications = 4; // Número de notificações por vez
+
+        // Exibe as 4 primeiras notificações
+        function updateNotifications() {
+            for (let i = 0; i < caixas.length; i++) {
+                if (i >= startIndex && i < startIndex + maxNotifications) {
+                    caixas[i].style.display = 'block';
+                } else {
+                    caixas[i].style.display = 'none';
+                }
+            }
+
+            document.getElementById('btn-up').disabled = startIndex === 0;
+            document.getElementById('btn-down').disabled = startIndex + maxNotifications >= caixas.length;
+        }
+
+        document.getElementById('btn-up').addEventListener('click', () => {
+            startIndex--;
+            updateNotifications();
+        });
+
+        document.getElementById('btn-down').addEventListener('click', () => {
+            startIndex++;
+            updateNotifications();
+        });
+
+        // Inicializa as notificações
+        updateNotifications();
+
+        // Mostrar e esconder o card de edição
+        const botaoEditar = document.getElementById('botao-editar');
+        const overlay = document.getElementById('overlay');
+        const cardEditar = document.getElementById('card-editar');
+
+        botaoEditar.addEventListener('click', () => {
+            overlay.style.display = 'flex'; // Exibir o overlay
+        });
+
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                overlay.style.display = 'none'; // Esconder o overlay ao clicar fora do card
+            }
+        });
+        document.getElementById('botao-salvar').addEventListener('click', function() {
+    // Coletar valores dos inputs
+    const numeroCartao = document.getElementById('numero-cartao').value;
+    const validade = document.getElementById('validade').value;
+    const cvv = document.getElementById('cvv').value;
+    const nomeTitular = document.getElementById('nome-titular').value;
+    const cnpjCpf = document.getElementById('cnpj-cpf').value;
+    const apelido = document.getElementById('apelido').value;
+
+    // Verificar se todos os campos obrigatórios estão preenchidos
+    if (!numeroCartao || !validade || !cvv || !nomeTitular || !cnpjCpf) {
+        alert("Por favor, preencha todos os campos obrigatórios.");
+        return;
+    }
+
+    // Fechar o overlay
+    document.getElementById('overlay').style.display = 'none';
+
+    // Mostrar a notificação
+    const notificacao = document.getElementById('notificacao');
+    notificacao.style.display = 'block';
+    setTimeout(() => {
+        notificacao.style.display = 'none';
+    }, 3000); // Esconde a notificação após 3 segundos
+});
+// Função para mostrar a notificação
+function mostrarNotificacao() {
+    const notificacao = document.getElementById('notificacao');
+    notificacao.style.display = 'block'; // Exibe a notificação
+    setTimeout(() => {
+        notificacao.style.display = 'none'; // Esconde após 3 segundos
+    }, 3000);
+}
+
+// Exemplo de uso: chama a função ao clicar no botão Salvar
+document.getElementById('salvar-button').addEventListener('click', () => {
+    // Lógica de salvamento do cartão
+
+    mostrarNotificacao(); // Chama a função para mostrar a notificação
+});
+
+
+    </script>
+</body>
+</html>
